@@ -16,7 +16,7 @@ class DBClient {
     this.client.connect()
       .then(() => {
         console.log('Connected to MongoDB');
-        this.db = this.client.db(this.database);  // Store reference to the DB
+        this.db = this.client.db(this.database); // Store reference to the DB
         this.connected = true;
       })
       .catch((err) => {
@@ -30,7 +30,7 @@ class DBClient {
   }
 
   async nbUsers() {
-    if (!this.isAlive()) return 0;  // Ensure connection
+    if (!this.isAlive()) return 0; // Ensure connection
     try {
       const users = await this.db.collection('users').countDocuments();
       return users;
@@ -41,7 +41,7 @@ class DBClient {
   }
 
   async nbFiles() {
-    if (!this.isAlive()) return 0;  // Ensure connection
+    if (!this.isAlive()) return 0; // Ensure connection
     try {
       const files = await this.db.collection('files').countDocuments();
       return files;
@@ -52,7 +52,7 @@ class DBClient {
   }
 
   async createUser(email, password) {
-    if (!this.isAlive()) return null;  // Ensure connection
+    if (!this.isAlive()) return null; // Ensure connection
     const hashedPwd = pwdHashed(password);
     try {
       const user = await this.db.collection('users').insertOne({ email, password: hashedPwd });
@@ -64,7 +64,7 @@ class DBClient {
   }
 
   async getUser(email) {
-    if (!this.isAlive()) return null;  // Ensure connection
+    if (!this.isAlive()) return null; // Ensure connection
     try {
       const user = await this.db.collection('users').findOne({ email });
       return user || null;
@@ -75,7 +75,7 @@ class DBClient {
   }
 
   async getUserById(id) {
-    if (!this.isAlive()) return null;  // Ensure connection
+    if (!this.isAlive()) return null; // Ensure connection
     try {
       const _id = new mongo.ObjectID(id);
       const user = await this.db.collection('users').findOne({ _id });
